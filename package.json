@@ -1,0 +1,22 @@
+{
+  "name": "puddleworld-backend",
+  "version": "1.0.0",
+  "description": "Back-end server for the website 'Puddle World'. NodeJS with Prisma (PostgreSQL)",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "tsc && node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.7.0",
+    "fastify": "^3.21.5",
+    "prisma-multischema": "^1.1.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.4",
+    "prisma": "^5.7.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}

@@ -1,0 +1,24 @@
+// NOTE: Accounts related models...
+
+model Account {
+  id                Int      @id @default(autoincrement())
+  email             String   @unique
+  username          String   @unique
+  displayName       String   @default(dbgenerated("username"))
+  hashedPassword    String
+  createdAt DateTime @default(now())
+
+  sessions AccountSession[]
+}
+
+
+model AccountSession {
+  sessionToken String @unique
+  createdAt   DateTime @default(now())
+  lastUsed    DateTime
+  expiryDate DateTime @default(dbgenerated("CURRENT_TIMESTAMP + interval '90 days'"))
+  browserInfo String
+
+  account     Account  @relation(fields: [accountId], references: [id])
+  accountId   Int
+}

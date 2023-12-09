@@ -1,0 +1,33 @@
+//🧩Don't Edit this file.✨Generated in Sat Dec 09 2023 09:22:04 GMT+0800 (Singapore Standard Time)✨
+// NOTE: Accounts related models...
+
+model Account {
+  id                Int      @id @default(autoincrement())
+  email             String   @unique
+  username          String   @unique
+  displayName       String   @default(dbgenerated("username"))
+  hashedPassword    String
+  createdAt DateTime @default(now())
+
+  sessions AccountSession[]
+}
+
+
+model AccountSession {
+  sessionToken String @unique
+  createdAt   DateTime @default(now())
+  lastUsed    DateTime
+  expiryDate  DateTime @default(now() + interval("90 days"))
+  browserInfo String
+
+  account     Account  @relation(fields: [accountId], references: [id])
+  accountId   Int
+}
+
+generator client {
+provider = "prisma-client-js"
+}
+datasource db {
+provider = "postgresql"
+url      = env("DATABASE_URL")
+}
