@@ -1,12 +1,11 @@
 import fastify from 'fastify';
-import { PrismaClient } from '@prisma/client';
+import signupRoute from './routes/accounts/signupRoute';
 
-const prisma = new PrismaClient();
 const app = fastify();
+signupRoute(app);
 
-app.get('/', async (request, reply) => {
-  const users = await prisma.user.findMany();
-  reply.send(users);
+app.get('/test', async (request, reply) => { 
+  reply.status(200).send("Works!");
 });
 
 const start = async () => {
@@ -14,7 +13,7 @@ const start = async () => {
     await app.listen(3000);
     console.log('Server is running on http://localhost:3000');
   } catch (err) {
-    console.error(err);
+    console.log(err)
     process.exit(1);
   }
 };
