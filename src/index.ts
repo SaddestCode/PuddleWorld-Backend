@@ -1,8 +1,10 @@
 import fastify from 'fastify';
 import signupRoute from './routes/accounts/signupRoute';
+import loginRoute from './routes/accounts/loginRoute';
 
 const app = fastify();
 signupRoute(app);
+loginRoute(app);
 
 app.get('/test', async (request, reply) => { 
   reply.status(200).send("Works!");
