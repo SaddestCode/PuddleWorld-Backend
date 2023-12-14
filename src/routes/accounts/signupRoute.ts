@@ -1,10 +1,11 @@
 import { FastifyInstance } from 'fastify';
 import { SignupRequestModel } from '@/models/signupRequestModel';
 import { signupUser } from '@/services/accounts/signupService';
+import { API_ROUTES } from '@/apiRoutes';
 
 const signupRoute = async (app: FastifyInstance) => {
 
-  app.post('/user/signup', async (request, reply) => {
+  app.post(API_ROUTES.USER_SIGNUP, async (request, reply) => {
     try {
       const signupInfo = request.body as SignupRequestModel;
       const responseMessage = await signupUser(signupInfo);
