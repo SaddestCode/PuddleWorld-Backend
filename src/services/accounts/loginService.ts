@@ -1,8 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import { ResponseMessage } from '@/models/responseMessage';
 import { LoginRequestModel } from '@/models/loginRequestModel';
-import { nanoid } from 'nanoid';
 import { UserLoginDetail } from '@/models/userLoginDetail';
+import { createUserSession } from './sessionService';
 
 const bcrypt = require('bcrypt')
 const prisma = new PrismaClient();
@@ -20,26 +20,6 @@ async function findUser(username: string) {
   });
 
   return existingUser;
-}
-
-async function createUserSession(accountId: number, browserInfo: string): Promise<string> {
-  const sessionToken = nanoid(); 
-
-  const createdSession = await prisma.accountSession.create({
-    data: {
-      sessionToken: sessionToken,
-      lastUsed: new Date(),
-      expiryDate: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
-      browserInfo: browserInfo,
-      accountId: accountId,
-    },
-  });
-
-  if (createdSession) {
-    return sessionToken;
-  } else {
-    throw new Error('Failed to create user session');
-  }
 }
 
 export const loginUser = async (loginInfo: LoginRequestModel): Promise<ResponseMessage> => {

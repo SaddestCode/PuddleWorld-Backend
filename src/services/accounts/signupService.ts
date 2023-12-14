@@ -1,6 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import { SignupRequestModel } from '@/models/signupRequestModel';
 import { ResponseMessage } from '@/models/responseMessage';
+import { createUserSession } from './sessionService';
+import { UserLoginDetail } from '@/models/userLoginDetail';
 
 const bcrypt = require('bcrypt')
 const prisma = new PrismaClient();
@@ -54,10 +56,18 @@ export const signupUser = async (signupInfo: SignupRequestModel): Promise<Respon
     }
 
     const newUser = await createUser(signupInfo);
+    const newSession = await createUserSession(newUser.id, signupInfo.browserInfo);
+
+    const authData: UserLoginDetail = {
+      token: newSession,
+      username: newUser.username,
+      displayName: newUser.displayName
+    }
+
     return {
       title: 'SUCCESS',
       message: 'User signed up successfully!',
-      data: { userId: newUser.id },
+      data: authData,
     };
 
   } catch (error) {

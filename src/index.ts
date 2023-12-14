@@ -1,6 +1,6 @@
 import fastify from 'fastify';
-import signupRoute from './routes/accounts/signupRoute';
-import loginRoute from './routes/accounts/loginRoute';
+import signupRoute from '@/routes/accounts/signupRoute';
+import loginRoute from '@/routes/accounts/loginRoute';
 
 const app = fastify();
 signupRoute(app);
