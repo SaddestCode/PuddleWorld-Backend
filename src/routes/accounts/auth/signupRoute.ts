@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
-import { SignupRequestModel } from '@/models/signupRequestModel';
-import { signupUser } from '@/services/accounts/signupService';
+import { SignupRequestModel } from '@/models/accounts/auth/signupRequestModel';
+import { signupUser } from '@/services/accounts/auth/signupService';
 import { API_ROUTES } from '@/apiRoutes';
 
 const signupRoute = async (app: FastifyInstance) => {

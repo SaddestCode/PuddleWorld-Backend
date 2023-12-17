@@ -1,8 +1,8 @@
 import { PrismaClient } from '@prisma/client';
-import { SignupRequestModel } from '@/models/signupRequestModel';
-import { ResponseMessage } from '@/models/responseMessage';
-import { createUserSession } from './sessionService';
-import { UserLoginDetail } from '@/models/userLoginDetail';
+import { SignupRequestModel } from '@/models/accounts/auth/signupRequestModel';
+import { ResponseMessage } from '@/models/accounts/auth/responseMessage';
+import { createUserSession } from '../sessionService';
+import { UserLoginDetail } from '@/models/accounts/auth/userLoginDetail';
 
 const bcrypt = require('bcrypt')
 const prisma = new PrismaClient();

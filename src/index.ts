@@ -1,8 +1,16 @@
 import fastify from 'fastify';
-import signupRoute from '@/routes/accounts/signupRoute';
-import loginRoute from '@/routes/accounts/loginRoute';
+const rateLimit = require('@fastify/rate-limit');
+import signupRoute from '@/routes/accounts/auth/signupRoute';
+import loginRoute from '@/routes/accounts/auth/loginRoute';
 
 const app = fastify();
+
+app.register(rateLimit, {
+  max: 100,
+  timeWindow: 60000,
+  cache: 10000,
+});
+
 signupRoute(app);
 loginRoute(app);
 
@@ -12,7 +20,7 @@ app.get('/test', async (request, reply) => {
 
 const start = async () => {
   try {
-    await app.listen(3000);
+    await app.listen({ port: 3000 });
     console.log('Server is running on http://localhost:3000');
   } catch (err) {
     console.log(err)
